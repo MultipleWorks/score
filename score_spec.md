@@ -1,11 +1,11 @@
 # Score Format Specification
-## Format version 0.1 (spec revision 0.1.4)
+## Format version 0.1 (spec revision 0.1.5)
 
 **Status:** Draft
 **Owner:** Mark Goodchild, MultipleWorks
 **Licence:** MIT
 **Repository:** github.com/multipleworks/score
-**Last updated:** 2026-04-16
+**Last updated:** 2026-04-22
 
 **On versioning:** `score_version` in every skill file stays as `"0.1"` — that
 is the protocol version. The spec revision number (currently `0.1.4`) tracks
@@ -115,37 +115,37 @@ All fields are required. A skill file missing any required field is invalid and 
 
 ---
 
-## Governance Metadata (new in v0.1.1)
+## Governance Metadata (new in v0.1.4)
 
-Four governance fields were added in Score v0.1.1. They are **optional in v0.1.1** (missing fields produce warnings, not errors) but will be **required in v0.2**. The migration path is: add them now via `score migrate --to 0.1.1`, populate `approved_by` and `approved_at` as a human review step, then v0.2 flips the warnings to errors.
+Four governance fields were added in Score v0.1.4. They are **optional in v0.1.4** (missing fields produce warnings, not errors) but will be **required in v0.2**. The migration path is: add them now via `score migrate --to 0.1.4`, populate `approved_by` and `approved_at` as a human review step, then v0.2 flips the warnings to errors.
 
 ### `approved_by`
-- Type: string (optional in v0.1.1, required in v0.2)
+- Type: string (optional in v0.1.4, required in v0.2)
 - The person or identifier who approved this version of the skill for production use
 - Format is free text — email addresses, full names, or opaque identifiers all work
 - Example: `mark@multipleworks.com.hk`
 
 ### `approved_at`
-- Type: string (optional in v0.1.1, required in v0.2)
+- Type: string (optional in v0.1.4, required in v0.2)
 - Format: ISO 8601 date — `YYYY-MM-DD`
 - The date this version was approved
 - Must be greater than or equal to `updated` — approval applies to content as at the updated date
 - Example: `2026-04-16`
 
 ### `review_due`
-- Type: string (optional in v0.1.1, recommended)
+- Type: string (optional in v0.1.4, recommended)
 - Format: ISO 8601 date — `YYYY-MM-DD`
 - A date by which this skill should be reviewed for ongoing accuracy
-- The `score migrate --to 0.1.1` command defaults this to 12 months from today
+- The `score migrate --to 0.1.4` command defaults this to 12 months from today
 - A `review_due` in the past is a warning
 
 ### `classification`
-- Type: string (optional in v0.1.1, required in v0.2)
+- Type: string (optional in v0.1.4, required in v0.2)
 - One of: `public`, `internal`, `confidential`
 - Governs LLM routing in Score-compatible runtimes:
   - `public` and `internal`: routed per the organisation's default LLM setting
   - `confidential`: **always** routed to a local model, never to a cloud LLM (hard constraint, not configurable)
-- `score migrate --to 0.1.1` defaults new entries to `internal` as the safe conservative choice
+- `score migrate --to 0.1.4` defaults new entries to `internal` as the safe conservative choice
 
 ---
 
@@ -381,7 +381,8 @@ These are documented limitations of the current implementation. They are not sil
 | 0.1.1 | 2026-04-05 | Added Execution Hints section (optional locking fields), skill-rename guidance, and trigger-limit design rationale. No breaking changes. |
 | 0.1.2 | 2026-04-10 | Documented `score_version` as a required field (was implicit in implementation but undocumented). Tightened validation rule #4 wording, added trigger maximum to rule #6, added rule #11 for non-empty body. No format changes — only spec accuracy fixes against the current implementation. |
 | 0.1.3 | 2026-04-12 | Added `ui_theme` as an optional execution hint. Allows brand skills to provide structured UI theming values (brand name, colours, fonts, tagline) for Score-compatible management tools. |
-| 0.1.4 | 2026-04-16 | Added governance metadata section: `approved_by`, `approved_at`, `review_due`, `classification`. Optional in this revision (warnings if missing). Will be required in the next protocol bump (0.2). `classification: confidential` forces local-only LLM routing. `score migrate --to 0.1.1` CLI command added to score-core to apply safe defaults. |
+| 0.1.4 | 2026-04-16 | Added governance metadata section: `approved_by`, `approved_at`, `review_due`, `classification`. Optional in this revision (warnings if missing). Will be required in the next protocol bump (0.2). `classification: confidential` forces local-only LLM routing. `score migrate --to 0.1.4` CLI command added to score-core to apply safe defaults. |
+| 0.1.5 | 2026-04-22 | Documentation fix: corrected all `v0.1.1` references in the Governance Metadata section to `v0.1.4`, matching the revision that introduced these fields. The score-core CLI target was renamed from `--to 0.1.1` to `--to 0.1.4` in score-core 0.1.4. No schema or behavioural changes. |
 
 ---
 
