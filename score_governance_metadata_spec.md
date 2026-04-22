@@ -178,7 +178,7 @@ The complete v0.1.3 frontmatter schema, showing all fields including those inher
 
 ```yaml
 ---
-# Score format version (required, v0.1.1)
+# Score format version (required, v0.1.2)
 score_version: "0.1"
 
 # Identity (required)
