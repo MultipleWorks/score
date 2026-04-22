@@ -1,10 +1,10 @@
 # Score Format – Governance Metadata Fields
-## Specification Update v0.1.3
+## Specification Update v0.1.4
 
 **Status:** Draft  
 **Author:** Mark Goodchild, MultipleWorks  
 **Repository:** github.com/multipleworks/score  
-**Last updated:** April 2026  
+**Last updated:** 2026-04-22  
 **Supersedes:** score_spec.md v0.1.0 (additive – no breaking changes)
 
 ---
@@ -26,7 +26,7 @@
 
 ## Overview
 
-Score v0.1.1 adds four optional governance metadata fields to the skill file frontmatter:
+Score v0.1.4 adds four optional governance metadata fields to the skill file frontmatter:
 
 | Field | Type | Purpose |
 |-------|------|---------|
@@ -35,7 +35,7 @@ Score v0.1.1 adds four optional governance metadata fields to the skill file fro
 | `review_due` | date | When this skill is next due for review. |
 | `classification` | string | Data sensitivity classification of the skill's content. |
 
-All four fields are optional in v0.1.1. A v0.1.0 skill file without these fields remains valid and will load without warnings. A v0.1.1 skill file with these fields is backward-compatible – any v0.1.0-compatible loader that does not recognise these fields will ignore them without error.
+All four fields are optional in v0.1.4. A v0.1.0 skill file without these fields remains valid and will load without warnings. A v0.1.4 skill file with these fields is backward-compatible – any v0.1.0-compatible loader that does not recognise these fields will ignore them without error.
 
 In Score v0.2, `approved_by`, `approved_at`, and `classification` will be required fields. `review_due` will remain optional.
 
@@ -51,7 +51,7 @@ This creates a problem for portability. A skill file exported from Maestro and l
 
 Adding these fields to the frontmatter closes that gap. The skill file becomes self-describing from a governance perspective. The Independent Review can work from the files alone.
 
-The fields are optional in v0.1.1 rather than required because existing skill libraries should not break on update, and because not every Score deployment has formal approval workflows. A solo developer building personal skills does not need an approver field. An enterprise deploying Maestro does.
+The fields are optional in v0.1.4 rather than required because existing skill libraries should not break on update, and because not every Score deployment has formal approval workflows. A solo developer building personal skills does not need an approver field. An enterprise deploying Maestro does.
 
 ---
 
@@ -201,7 +201,7 @@ active: true                              # boolean
 created: 2026-04-16                       # ISO 8601, set once, never change
 updated: 2026-04-16                       # ISO 8601, update on every change
 
-# Governance metadata (optional in v0.1.1, required in v0.2)
+# Governance metadata (optional in v0.1.4, required in v0.2)
 approved_by: name@example.com            # named individual, not a team
 approved_at: 2026-04-16                  # must be >= updated date
 review_due: 2026-10-16                   # recommended, not required
@@ -219,9 +219,9 @@ cancel_phrases: []
 
 ## Validation rules
 
-The following validation rules apply to the governance metadata fields. These are enforced by score-core's validator and surfaced as warnings in v0.1.1, errors in v0.2.
+The following validation rules apply to the governance metadata fields. These are enforced by score-core's validator and surfaced as warnings in v0.1.4, errors in v0.2.
 
-| Rule | Level in v0.1.1 | Level in v0.2 |
+| Rule | Level in v0.1.4 | Level in v0.2 |
 |------|----------------|---------------|
 | `approved_by` present | Warning if absent | Error |
 | `approved_at` present | Warning if absent | Error |
@@ -267,9 +267,9 @@ The `classification` field is the bridge between the skill format and the runtim
 
 ## Migration from v0.1.0
 
-No migration is required. Existing v0.1.0 skill files are valid v0.1.1 files. The governance metadata fields are additive – no existing field has been modified, renamed, or removed.
+No migration is required. Existing v0.1.0 skill files are valid v0.1.4 files. The governance metadata fields are additive – no existing field has been modified, renamed, or removed.
 
-**Recommended migration steps for organisations adopting v0.1.1:**
+**Recommended migration steps for organisations adopting v0.1.4:**
 
 1. Add `classification` to all existing skills first. The highest-priority field: it governs LLM routing, and existing skills without it default to `internal`, which may not be correct for skills containing confidential information.
 
@@ -291,9 +291,9 @@ This command scans the skill library, identifies files missing governance fields
 
 Score v0.2 will make `approved_by`, `approved_at`, and `classification` required fields. `review_due` will remain optional.
 
-The v0.2 validator will reject skill files missing these fields with an error, not a warning. Organisations that have added the fields in v0.1.1 will have no migration work to do when v0.2 is released. Organisations that have not added them will need to do so before upgrading their score-core dependency.
+The v0.2 validator will reject skill files missing these fields with an error, not a warning. Organisations that have added the fields in v0.1.4 will have no migration work to do when v0.2 is released. Organisations that have not added them will need to do so before upgrading their score-core dependency.
 
-Score v0.2 will also introduce workflow descriptor fields – the schema extension that allows Score files to describe multi-step processes, not just knowledge injection. These will be additive. A v0.1.1 skill file will remain valid as a v0.2 skill file.
+Score v0.2 will also introduce workflow descriptor fields – the schema extension that allows Score files to describe multi-step processes, not just knowledge injection. These will be additive. A v0.1.4 skill file will remain valid as a v0.2 skill file.
 
 The backward compatibility commitment: a skill file valid at any Score version will remain loadable by any future Score-compatible system. We will not remove fields, change their semantics, or alter their validation rules in a breaking way without a major version increment and a documented migration path.
 
@@ -301,7 +301,7 @@ The backward compatibility commitment: a skill file valid at any Score version w
 
 ## Example skill files
 
-### Minimal v0.1.1 skill (governance fields present, internal classification)
+### Minimal v0.1.4 skill (governance fields present, internal classification)
 
 ```yaml
 ---
@@ -397,7 +397,8 @@ Extract key themes, surface tensions or contradictions...
 
 | Version | Date | Change |
 |---------|------|--------|
+| 0.1.4 | 2026-04-22 | Corrected body-text references from `v0.1.1` to `v0.1.4` — governance metadata landed in main Score spec 0.1.4, not 0.1.1 as previously written. This doc's own changelog rows retain their historical version column (0.1.0–0.1.3) since they record this document's independent publishing history. No semantic or schema changes. |
 | 0.1.3 | April 2026 | Added R24: valid classification combination matrix. Six valid pairs defined, six invalid combinations documented with reasons. `internal` + `classified` flagged as warning rather than error. |
 | 0.1.2 | April 2026 | Updated `classification` to four-level ISO 27001 A.8.2 vocabulary: `public`, `internal`, `confidential`, `secret`. Added `access_classification` field (ISO 27001 A.9.1): `unrestricted`, `restricted`, `classified`. Added organisational vocabulary mapping mechanism. Added disclosure obligation for confidential and secret skills. |
-| 0.1.1 | April 2026 | Added governance metadata fields: `approved_by`, `approved_at`, `review_due`, `classification`. All optional. Validation rules established for v0.1.1 (warnings) and v0.2 (errors). |
+| 0.1.1 | April 2026 | Added governance metadata fields: `approved_by`, `approved_at`, `review_due`, `classification`. All optional. Validation rules established for v0.1.4 (warnings) and v0.2 (errors). |
 | 0.1.0 | April 2026 | Initial Score format specification. |
