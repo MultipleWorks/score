@@ -40,6 +40,10 @@ This is the OpenAPI playbook applied to AI skills: author upstream, generate dow
 
 Score is the specification-layer reference implementation in a broader architecture for AI in the enterprise. The non-technical framing — what knowledge an AI system needs to handle, how the layers fit together, what governance properties have to hold — is in *AI That Knows Your Business: An Executive Briefing*, available at [multipleworks.com.hk/briefings](https://multipleworks.com.hk/briefings).
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on contributing to Score.
+
 ## Licence
 
 MIT. See [LICENCE](LICENCE).
