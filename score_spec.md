@@ -16,11 +16,15 @@ metadata is a spec revision, not a protocol bump.
 
 ## What Score Is
 
-Score is a portable, human-readable format for encoding organisational knowledge and skills. A Score skill file describes what an AI assistant should know and how it should behave in a specific context — written in plain markdown so any human can read and edit it, and any LLM can consume it.
+Score is a vendor-independent specification format for AI skills. A Score skill file describes what an AI system should know, what it is allowed to do, and what governance applies, in a format that is independent of any particular runtime.
 
-- **Score is LLM-agnostic.** A skill written for one model works with any other.
-- **Score is tool-agnostic.** A skill written for one assistant platform can be loaded into any Score-compatible system.
-- **Score is human-readable.** A skill file can be opened in any text editor, tracked in git, and maintained by non-developers.
+Score sits above the runtime formats — Anthropic Skills, MCP server configurations, OpenAI tools, Microsoft Copilot Studio plugins. Those are excellent execution surfaces. They are not designed to capture authoring history, approval state, regulatory classification, or audit metadata. Score captures these. Adapters compile Score skills to whichever runtime target the deployment needs.
+
+* **Score is the source of truth.** A skill is authored once in Score, version-controlled in Score, audited in Score. The runtime targets are compilation outputs.
+* **Score is human-readable.** A skill file is plain markdown with YAML frontmatter. Any text editor opens it. Any LLM can consume it. Any human can review it.
+* **Score is governance-aware.** The format captures the metadata that runtime formats omit — approver, approval date, classification, review cadence, immutable audit trail.
+
+The compilation from Score to a runtime target is lossy by design. Each runtime format expresses a subset of what Score expresses; the loss is documented per adapter. What is preserved at the Score level is the source of truth.
 
 ---
 

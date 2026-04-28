@@ -11,6 +11,7 @@
 ## Contents
 
 - [Overview](#overview)
+- [Where this fits](#where-this-fits)
 - [Design principles](#design-principles)
 - [Permission architecture](#permission-architecture)
 - [Authentication](#authentication)
@@ -40,6 +41,16 @@ The separation is intentional. It means:
 - A skill that is revoked or updated takes effect immediately – the runtime picks up the change at its next context request.
 - The runtime can be open-sourced and self-hosted without exposing the skill library.
 - Third-party runtimes can be built against this spec and will behave consistently.
+
+---
+
+## Where this fits
+
+The Context API is the contract between a Score-compatible runtime and a Score management layer. Score itself is the specification format — what skills look like as files. The management layer is where skills are stored, approved, version-controlled, and governed. The runtime is what executes against an LLM at query time.
+
+These three layers exist in deliberate separation. The skill files are vendor-independent. The management layer can be implemented in any technology — Maestro is one implementation, others are possible. The runtime can be self-hosted or third-party, on any LLM, in any environment. The API specified here is what binds them together.
+
+A runtime is Score-compatible if it correctly calls this API and honours its responses. It does not need to understand the Score file format directly — it receives skills via the API. It does not need to implement governance logic — the management layer enforces it. The runtime's job is to call, receive, and execute.
 
 ---
 

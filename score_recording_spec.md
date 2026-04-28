@@ -29,6 +29,8 @@
 
 ## Overview
 
+The Recording is the audit-evidence half of Score's specification-and-governance architecture. The Score files are the declaration — what an AI system is permitted to know and do. The Recording is the evidence — what the runtime actually did, captured at execution time, in a format that can be reviewed by an external auditor without access to the runtime or any vendor-specific tooling.
+
 The Recording is the immutable audit log of a Score runtime. Every execution event – every query received, every skill invoked, every honesty protocol activation, every session lock – is written to The Recording at the moment it occurs.
 
 The Recording has two audiences: the organisation that operates the runtime, and an external reviewer – an auditor, a regulator, or legal counsel – who needs to verify that the runtime behaved as declared.

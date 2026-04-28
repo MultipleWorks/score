@@ -2,8 +2,13 @@
 
 A practical guide to creating skill files that work reliably in production.
 
-This guide is for anyone writing skills for a Score-compatible AI assistant —
-no technical background required.
+This guide is for anyone writing skills for a Score-compatible AI assistant — no technical background required.
+
+## Where skills fit
+
+A Score skill is the unit of organisational knowledge in the broader specification-and-governance architecture. The skill file describes what your AI assistant should know, what it is allowed to do, and what governance applies. The runtime — whichever runtime your deployment uses — receives that skill via the management layer and executes against it at query time.
+
+You do not need to know how that pipeline works to write a skill well. You need to know that the skill file is the source of truth: what is in the file is what governs the response. If a fact is not in the skill, the assistant will not know it. If a rule is not in the skill, the assistant will not enforce it. Skill-writing is the discipline of being exhaustive on the things that matter and being absent from the things that do not.
 
 → [What is a skill?](#what-is-a-skill)
 → [When to create a skill](#when-to-create-a-skill)
@@ -14,14 +19,9 @@ no technical background required.
 
 ## What is a skill?
 
-A skill is a piece of your organisation's knowledge, written down in a form
-your AI assistant can reliably use. Not a prompt. Not a document. A skill is
-specific, structured, and permanent — it fires automatically when it's needed,
-every time, without you having to explain it again.
+A skill is a piece of your organisation's knowledge, written down in a form your AI assistant can reliably use. Not a prompt. Not a document. A skill is specific, structured, and version-controlled — it is authored once, approved through your governance process, and applied automatically by the assistant whenever it is relevant.
 
-The difference between a skill and a prompt: a prompt is something you write
-for one conversation. A skill is something you write once and the assistant
-uses forever.
+The difference between a skill and a prompt: a prompt is something you type into a chat for one conversation. A skill is something you commit to your skill library, where it becomes part of the declared behaviour of your AI system — visible to your governance process, auditable in your Recording, and applied consistently across every conversation that needs it.
 
 ---
 
